@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Palestrantes — EISEL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: #f8fafc; color: #0f172a; }
+    h1, h2, h3, h4, .font-display { font-family: 'Syne', sans-serif; }
+
+    .circuit-bg {
+      background-color: #0f172a;
+      background-image: linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.08) 1px, transparent 1px);
+      background-size: 40px 40px; position: relative; overflow: hidden;
+    }
+    .circuit-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(29,78,216,0.35) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 30%, rgba(22,163,74,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .text-gradient-blue-green { background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pill-blue   { background: rgba(59,130,246,0.12); color: #3b82f6; border: 1px solid rgba(59,130,246,0.25); }
+    .pill-green  { background: rgba(34,197,94,0.12);  color: #16a34a; border: 1px solid rgba(34,197,94,0.25); }
+    .pill-yellow { background: rgba(234,179,8,0.12);  color: #a16207; border: 1px solid rgba(234,179,8,0.3); }
+
+    .section-divider { width: 56px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #3b82f6, #22c55e); margin: 0 auto 1.5rem; }
+
+    .nav-link { position: relative; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px; background: linear-gradient(90deg, #3b82f6, #22c55e); border-radius: 1px; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── Speaker card ─── */
+    .speaker-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .speaker-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.10);
+    }
+
+    .speaker-photo {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .speaker-avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 3px solid rgba(255,255,255,0.8);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    /* ─── Keynote card (larger) ─── */
+    .keynote-card {
+      background: #fff;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+    .keynote-card::before {
+      content: '';
+      position: absolute; inset: -2px;
+      background: linear-gradient(135deg, #1d4ed8, #16a34a);
+      border-radius: 22px;
+      z-index: -1;
+    }
+    .keynote-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(29,78,216,0.2); }
+
+    .btn-primary { background: linear-gradient(135deg, #1d4ed8, #16a34a); color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; letter-spacing: 0.04em; padding: 0.75rem 2rem; border-radius: 8px; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+    .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ════════════════════════════════
+       NAVBAR
+  ════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #1d4ed8, #16a34a);">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <span class="font-display font-800 text-slate-800 text-lg tracking-tight leading-none">EIS<span class="text-gradient-blue-green">EL</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html"        class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Home</a>
+        <a href="programacao.html"  class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Programação</a>
+        <a href="palestrantes.html" class="nav-link text-blue-600">Palestrantes</a>
+        <a href="contato.html"      class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Contato</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://instagram.com" target="_blank" class="flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 rounded-lg" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @eisel_evento
+        </a>
+        <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-5 py-4 space-y-3">
+      <a href="index.html"        class="block text-slate-700 font-semibold py-1">Home</a>
+      <a href="programacao.html"  class="block text-slate-700 font-semibold py-1">Programação</a>
+      <a href="palestrantes.html" class="block text-blue-600 font-semibold py-1">Palestrantes</a>
+      <a href="contato.html"      class="block text-slate-700 font-semibold py-1">Contato</a>
+    </div>
+  </nav>
+  <script>document.getElementById('menu-btn').addEventListener('click',()=>document.getElementById('mobile-menu').classList.toggle('hidden'));</script>
+
+
+  <!-- ════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════ -->
+  <section class="circuit-bg pt-32 pb-20 px-5 text-center">
+    <div class="relative z-10 max-w-2xl mx-auto">
+      <span class="pill" style="background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3);">EISEL 2025</span>
+      <h1 class="font-display text-white text-5xl md:text-6xl font-800 mt-5 mb-4 tracking-tight">Palestrantes</h1>
+      <p class="text-blue-200/70 text-base">Conheça os especialistas que vão compartilhar conhecimento no evento</p>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       KEYNOTE SPEAKERS
+  ════════════════════════════════ -->
+  <section class="py-20 px-5 bg-white">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-14">
+        <div class="section-divider"></div>
+        <span class="pill pill-blue mb-3">Destaque</span>
+        <h2 class="text-slate-900 font-display text-4xl font-800 mt-3">Keynote Speakers</h2>
+        <p class="text-slate-500 mt-2 text-sm">Palestrantes principais do EISEL 2025</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+
+        <!-- Keynote 1 -->
+        <div class="keynote-card">
+          <div class="bg-white rounded-[18px] overflow-hidden">
+            <div class="speaker-photo" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">
+              <!-- Substitua por: <img src="foto-palestrante.jpg" alt="Nome" class="w-full h-full object-cover" /> -->
+              <div class="speaker-avatar" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6);">
+                <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="bg-blue-600 text-white text-xs font-700 px-3 py-1 rounded-full">KEYNOTE</span>
+              </div>
+            </div>
+            <div class="p-7">
+              <span class="pill pill-blue mb-3 text-xs">Energia Solar Fotovoltaica</span>
+              <h3 class="font-display font-800 text-slate-800 text-xl mt-2">NOME DO PALESTRANTE</h3>
+              <p class="text-blue-600 font-600 text-sm mt-1">Cargo / Título Profissional</p>
+              <p class="text-slate-500 text-sm mt-1">Empresa / Instituição de vinculação</p>
+              <p class="text-slate-600 text-sm mt-4 leading-relaxed">
+                Breve bio do palestrante. Descreva aqui a trajetória profissional, principais projetos e
+                contribuições para a área. Esta seção pode ter até 3–4 frases.
+                [<em>Substitua por bio real</em>]
+              </p>
+              <div class="mt-5 pt-5 border-t border-slate-100">
+                <p class="text-xs font-700 text-slate-400 uppercase tracking-widest mb-2">Palestra</p>
+                <p class="text-sm text-slate-700 font-600">TÍTULO DA PALESTRA KEYNOTE 1</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keynote 2 -->
+        <div class="keynote-card">
+          <div class="bg-white rounded-[18px] overflow-hidden">
+            <div class="speaker-photo" style="background: linear-gradient(135deg, #dcfce7, #bbf7d0);">
+              <div class="speaker-avatar" style="background: linear-gradient(135deg, #16a34a, #22c55e);">
+                <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="bg-green-600 text-white text-xs font-700 px-3 py-1 rounded-full">KEYNOTE</span>
+              </div>
+            </div>
+            <div class="p-7">
+              <span class="pill pill-green mb-3 text-xs">Redes Elétricas Inteligentes</span>
+              <h3 class="font-display font-800 text-slate-800 text-xl mt-2">NOME DO PALESTRANTE</h3>
+              <p class="text-green-600 font-600 text-sm mt-1">Cargo / Título Profissional</p>
+              <p class="text-slate-500 text-sm mt-1">Empresa / Instituição de vinculação</p>
+              <p class="text-slate-600 text-sm mt-4 leading-relaxed">
+                Breve bio do palestrante. Descreva aqui a trajetória profissional, principais projetos e
+                contribuições para a área. Esta seção pode ter até 3–4 frases.
+                [<em>Substitua por bio real</em>]
+              </p>
+              <div class="mt-5 pt-5 border-t border-slate-100">
+                <p class="text-xs font-700 text-slate-400 uppercase tracking-widest mb-2">Palestra</p>
+                <p class="text-sm text-slate-700 font-600">TÍTULO DA PALESTRA KEYNOTE 2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       ALL SPEAKERS GRID
+  ════════════════════════════════ -->
+  <section class="py-20 px-5" style="background: #f8fafc;">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-14">
+        <div class="section-divider" style="background: linear-gradient(90deg, #eab308, #3b82f6);"></div>
+        <span class="pill pill-yellow mb-3">Grade Completa</span>
+        <h2 class="text-slate-900 font-display text-4xl font-800 mt-3">Todos os Palestrantes</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+        <!-- Speaker Card Template — duplique este bloco para cada palestrante -->
+
+        <!-- Speaker 1 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #dbeafe, #ede9fe);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #4f46e5, #3b82f6);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-blue text-xs">Automação Industrial</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-blue-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 2 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #dcfce7, #d1fae5);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #15803d, #22c55e);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-green text-xs">Energia Eólica</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-green-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 3 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #fef9c3, #fde68a);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #b45309, #eab308);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-yellow text-xs">Eficiência Energética</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-yellow-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 4 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #1d4ed8, #7c3aed);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-blue text-xs">IoT & Controle</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-blue-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 5 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #be185d, #ec4899);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-green text-xs">Mobilidade Elétrica</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-green-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speaker 6 -->
+        <div class="speaker-card">
+          <div class="speaker-photo" style="background: linear-gradient(135deg, #d1fae5, #bbf7d0);">
+            <div class="speaker-avatar" style="background: linear-gradient(135deg, #065f46, #16a34a);">
+              <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <span class="pill pill-blue text-xs">Microrredes</span>
+            <h3 class="font-display font-700 text-slate-800 text-base mt-3">NOME DO PALESTRANTE</h3>
+            <p class="text-blue-600 text-xs font-600 mt-0.5">Cargo / Título</p>
+            <p class="text-slate-500 text-xs mt-0.5">Instituição / Empresa</p>
+            <p class="text-slate-500 text-xs mt-3 leading-relaxed">Breve bio do palestrante com 2–3 linhas descrevendo a área de atuação e experiência. [Substitua]</p>
+            <div class="mt-4 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-400 font-600">Palestra:</p>
+              <p class="text-xs text-slate-700 font-600 mt-0.5">TÍTULO DA PALESTRA</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       CTA
+  ════════════════════════════════ -->
+  <section class="py-14 px-5 bg-white border-t border-slate-100 text-center">
+    <p class="text-slate-500 text-sm mb-4">Confira a programação completa de palestras</p>
+    <a href="programacao.html" class="btn-primary">Ver Programação</a>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="circuit-bg text-white py-10 px-5">
+    <div class="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #1d4ed8, #16a34a);">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <span class="font-display font-800 text-xl">EISEL</span>
+      </a>
+      <p class="text-white/30 text-xs text-center">© 2025 EISEL — Todos os direitos reservados</p>
+      <div class="flex gap-4 text-sm">
+        <a href="index.html"       class="text-white/60 hover:text-white">Home</a>
+        <a href="programacao.html" class="text-white/60 hover:text-white">Programação</a>
+        <a href="contato.html"     class="text-white/60 hover:text-white">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

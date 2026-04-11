@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — EISEL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: #f8fafc; color: #0f172a; }
+    h1, h2, h3, h4, .font-display { font-family: 'Syne', sans-serif; }
+
+    .circuit-bg {
+      background-color: #0f172a;
+      background-image: linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.08) 1px, transparent 1px);
+      background-size: 40px 40px; position: relative; overflow: hidden;
+    }
+    .circuit-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(29,78,216,0.35) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 30%, rgba(22,163,74,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .text-gradient-blue-green { background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pill-blue   { background: rgba(59,130,246,0.12); color: #3b82f6; border: 1px solid rgba(59,130,246,0.25); }
+
+    .nav-link { position: relative; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem; }
+    .nav-link::after { content: ''; position: absolute; left: 0; bottom: -3px; width: 0; height: 2px; background: linear-gradient(90deg, #3b82f6, #22c55e); border-radius: 1px; transition: width 0.25s ease; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── Form styles ─── */
+    .form-field {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: #1e293b;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-field:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
+    .form-field::placeholder { color: #94a3b8; }
+
+    .form-label {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #1d4ed8, #16a34a);
+      color: white;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.04em;
+    }
+    .btn-submit:hover { opacity: 0.9; transform: scale(1.01); }
+    .btn-submit:active { transform: scale(0.99); }
+
+    /* ─── Info cards ─── */
+    .info-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: box-shadow 0.2s;
+    }
+    .info-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+
+    .info-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── Success toast ─── */
+    #success-msg {
+      display: none;
+      background: linear-gradient(135deg, #dcfce7, #d1fae5);
+      border: 1.5px solid #86efac;
+      border-radius: 12px;
+      padding: 16px 20px;
+      color: #166534;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ════════════════════════════════
+       NAVBAR
+  ════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #1d4ed8, #16a34a);">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <span class="font-display font-800 text-slate-800 text-lg tracking-tight leading-none">EIS<span class="text-gradient-blue-green">EL</span></span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html"        class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Home</a>
+        <a href="programacao.html"  class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Programação</a>
+        <a href="palestrantes.html" class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Palestrantes</a>
+        <a href="contato.html"      class="nav-link text-blue-600">Contato</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://instagram.com" target="_blank" class="flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 rounded-lg" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @eisel_evento
+        </a>
+        <button id="menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-5 py-4 space-y-3">
+      <a href="index.html"        class="block text-slate-700 font-semibold py-1">Home</a>
+      <a href="programacao.html"  class="block text-slate-700 font-semibold py-1">Programação</a>
+      <a href="palestrantes.html" class="block text-slate-700 font-semibold py-1">Palestrantes</a>
+      <a href="contato.html"      class="block text-blue-600 font-semibold py-1">Contato</a>
+    </div>
+  </nav>
+  <script>document.getElementById('menu-btn').addEventListener('click',()=>document.getElementById('mobile-menu').classList.toggle('hidden'));</script>
+
+
+  <!-- ════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════ -->
+  <section class="circuit-bg pt-32 pb-20 px-5 text-center">
+    <div class="relative z-10 max-w-2xl mx-auto">
+      <span class="pill" style="background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.3);">Fale Conosco</span>
+      <h1 class="font-display text-white text-5xl md:text-6xl font-800 mt-5 mb-4 tracking-tight">Contato</h1>
+      <p class="text-blue-200/70 text-base">Dúvidas, parcerias ou informações sobre o EISEL? Entre em contato!</p>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       CONTACT CONTENT
+  ════════════════════════════════ -->
+  <section class="py-20 px-5 bg-white">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+
+        <!-- ─── Contact Form ─── -->
+        <div>
+          <h2 class="font-display font-800 text-slate-800 text-2xl mb-2">Envie uma mensagem</h2>
+          <p class="text-slate-500 text-sm mb-7">Preencha o formulário e responderemos em breve.</p>
+
+          <!-- Success message (shown after submit) -->
+          <div id="success-msg" class="mb-6">
+            <div class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Mensagem enviada com sucesso! Entraremos em contato em breve.</span>
+            </div>
+          </div>
+
+          <div class="space-y-5" id="contact-form">
+
+            <!-- Name -->
+            <div>
+              <label class="form-label" for="name">Nome completo</label>
+              <input type="text" id="name" class="form-field" placeholder="Seu nome" autocomplete="name" />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="form-label" for="email">E-mail</label>
+              <input type="email" id="email" class="form-field" placeholder="seu@email.com" autocomplete="email" />
+            </div>
+
+            <!-- Subject -->
+            <div>
+              <label class="form-label" for="subject">Assunto</label>
+              <select id="subject" class="form-field" style="appearance:none; cursor:pointer;">
+                <option value="" disabled selected>Selecione um assunto</option>
+                <option>Dúvidas gerais</option>
+                <option>Inscrição no evento</option>
+                <option>Patrocínio e parcerias</option>
+                <option>Imprensa e mídia</option>
+                <option>Outros</option>
+              </select>
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label class="form-label" for="message">Mensagem</label>
+              <textarea id="message" rows="5" class="form-field" style="resize:vertical;"
+                        placeholder="Escreva sua mensagem aqui..."></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="button" class="btn-submit" onclick="handleSubmit()">
+              Enviar mensagem
+            </button>
+
+            <p class="text-xs text-slate-400 text-center">
+              Ao enviar, você concorda com nossa política de privacidade.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ─── Contact Info ─── -->
+        <div class="space-y-5">
+
+          <h2 class="font-display font-800 text-slate-800 text-2xl mb-6">Informações de contato</h2>
+
+          <!-- Email -->
+          <div class="info-card">
+            <div class="info-icon bg-blue-50">
+              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-display font-700 text-slate-800 text-sm">E-mail</p>
+              <a href="mailto:contato@eisel.com.br" class="text-blue-600 text-sm hover:underline mt-0.5 block">contato@eisel.com.br</a>
+              <p class="text-slate-400 text-xs mt-1">Respondemos em até 48h úteis</p>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="info-card">
+            <div class="info-icon" style="background: linear-gradient(135deg, rgba(131,58,180,0.1), rgba(253,29,29,0.1));">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" style="color: #e1306c;">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-display font-700 text-slate-800 text-sm">Instagram</p>
+              <a href="https://instagram.com" target="_blank" class="text-sm hover:underline mt-0.5 block" style="color:#e1306c;">@eisel_evento</a>
+              <p class="text-slate-400 text-xs mt-1">Siga para atualizações do evento</p>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="info-card">
+            <div class="info-icon bg-green-50">
+              <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-display font-700 text-slate-800 text-sm">Local</p>
+              <p class="text-slate-600 text-sm mt-0.5">Nome do Campus / Auditório<br/>Cidade — Estado</p>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div class="info-card">
+            <div class="info-icon bg-yellow-50">
+              <svg class="w-5 h-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-display font-700 text-slate-800 text-sm">Data do evento</p>
+              <p class="text-slate-600 text-sm mt-0.5">DD–DD de Mês de 2025</p>
+              <p class="text-slate-400 text-xs mt-1">HH:MM às HH:MM (ambos os dias)</p>
+            </div>
+          </div>
+
+          <!-- Organizer -->
+          <div class="info-card" style="background: linear-gradient(135deg, #eff6ff, #f0fdf4);">
+            <div class="info-icon" style="background: linear-gradient(135deg, #dbeafe, #dcfce7);">
+              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-display font-700 text-slate-800 text-sm">Organização</p>
+              <p class="text-slate-600 text-sm mt-0.5">Nome do Grupo / Entidade<br/>Departamento de Engenharia Elétrica</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       FAQ SECTION
+  ════════════════════════════════ -->
+  <section class="py-20 px-5" style="background: #f8fafc;">
+    <div class="max-w-3xl mx-auto">
+
+      <div class="text-center mb-12">
+        <h2 class="font-display font-800 text-slate-800 text-3xl mb-2">Perguntas Frequentes</h2>
+        <p class="text-slate-500 text-sm">Respostas rápidas para as dúvidas mais comuns</p>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- FAQ Item -->
+        <details class="bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-display font-700 text-slate-700 text-sm select-none list-none">
+            O evento é gratuito?
+            <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-500 text-sm leading-relaxed border-t border-slate-100 pt-4">
+            [SUBSTITUA] Sim / Não — Descreva aqui a política de inscrição do evento, valores, isenções, etc.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-display font-700 text-slate-700 text-sm select-none list-none">
+            Haverá emissão de certificado?
+            <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-500 text-sm leading-relaxed border-t border-slate-100 pt-4">
+            [SUBSTITUA] Sim — Certificados serão emitidos para participantes com frequência mínima de X horas. Descreva aqui como e quando serão enviados.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-display font-700 text-slate-700 text-sm select-none list-none">
+            Como me inscrevo nos workshops?
+            <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-500 text-sm leading-relaxed border-t border-slate-100 pt-4">
+            [SUBSTITUA] Descreva aqui o processo de inscrição nos workshops práticos — se é por ordem de chegada, formulário online, vagas limitadas, etc.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-display font-700 text-slate-700 text-sm select-none list-none">
+            O evento é aberto para todos os cursos?
+            <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-500 text-sm leading-relaxed border-t border-slate-100 pt-4">
+            [SUBSTITUA] Descreva o público-alvo do evento — se é exclusivo para alunos de Engenharia Elétrica ou aberto para outras áreas.
+          </div>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+          <summary class="flex items-center justify-between p-5 cursor-pointer font-display font-700 text-slate-700 text-sm select-none list-none">
+            Como posso ser patrocinador?
+            <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-500 text-sm leading-relaxed border-t border-slate-100 pt-4">
+            [SUBSTITUA] Entre em contato pelo e-mail contato@eisel.com.br com o assunto "Patrocínio" para receber nosso kit de patrocínio com planos e benefícios.
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="circuit-bg text-white py-10 px-5">
+    <div class="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #1d4ed8, #16a34a);">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <span class="font-display font-800 text-xl">EISEL</span>
+      </a>
+      <p class="text-white/30 text-xs text-center">© 2025 EISEL — Todos os direitos reservados</p>
+      <div class="flex gap-4 text-sm">
+        <a href="index.html"        class="text-white/60 hover:text-white">Home</a>
+        <a href="programacao.html"  class="text-white/60 hover:text-white">Programação</a>
+        <a href="palestrantes.html" class="text-white/60 hover:text-white">Palestrantes</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── Form submit handler ─── -->
+  <script>
+    function handleSubmit() {
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email || !subject || !message) {
+        alert('Por favor, preencha todos os campos antes de enviar.');
+        return;
+      }
+
+      // Aqui você conectaria com um backend, Formspree, EmailJS, etc.
+      // Por enquanto, apenas mostra a mensagem de sucesso.
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
