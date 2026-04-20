@@ -110,6 +110,19 @@
       font-weight: 600;
       font-size: 0.9rem;
     }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1d4ed8, #16a34a);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
   </style>
 </head>
 <body class="antialiased">
@@ -131,8 +144,7 @@
         <a href="palestrantes.html" class="nav-link text-slate-700 hover:text-blue-600 transition-colors">Palestrantes</a>
         <a href="contato.html"      class="nav-link text-blue-600">Contato</a>
         <a href="https://forms.google.com/SUBSTITUA-AQUI" target="_blank"
-           class="font-display font-700 text-white text-sm px-4 py-2 rounded-lg transition-all hover:opacity-90"
-           style="background: linear-gradient(135deg, #1d4ed8, #16a34a);">Inscreva-se</a>
+           class="btn-primary text-sm py-2 px-4" style="border-radius:8px;">Inscreva-se</a>
       </div>
       <div class="flex items-center gap-3">
         <a href="https://www.instagram.com/eisel.2026/" target="_blank" class="flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 rounded-lg" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);">
